@@ -9,11 +9,14 @@ character1 = load_image('myCharacter1.png')
 character2 = load_image('myCharacter2.png')
 
 p = character1
+h = 420
+y = 90
+f = 120
 
 def handle_events():
     global running
     global dir
-    global p, character1, character2
+    global p, h, y, f, character1, character2
     events = get_events()
 
     for event in events:
@@ -23,11 +26,19 @@ def handle_events():
             if event.key == SDLK_RIGHT:
                 dir += 1
                 p = character1
-                
+                y = 90
+                h = 420
+                f = 120
             elif event.key == SDLK_LEFT:
                 dir -= 1
+                y = 90
+                h = 420
+                f = 120
                 p = character2
-               
+            elif event.key == SDLK_SPACE:
+                y = 120
+                h = 250
+                f = 120
             elif event.key == SDLK_ESCAPE:
                 running = False
         elif event.type == SDL_KEYUP:
@@ -35,6 +46,7 @@ def handle_events():
                 dir -= 1
             elif event.key == SDLK_LEFT:
                 dir += 1
+                
 
 
 running = True
@@ -45,10 +57,10 @@ dir = 0
 while running:
     clear_canvas()
     bath.draw(bath_WIDTH // 2, bath_HEIGHT // 2)
-    p.clip_draw(frame * 120, 420, 115, 150, x, 90)
+    p.clip_draw(frame * f, h, 90, 160, x, y)
     update_canvas()
     handle_events()
-    frame = (frame + 1) % 6
+    frame = (frame + 1) % 4
     x += dir * 25
     delay(0.1)
 
