@@ -36,9 +36,8 @@ def handle_events():
                 f = 120
                 p = character2
             elif event.key == SDLK_SPACE:
-                y = 120
                 h = 250
-                f = 120
+                f = 130
             elif event.key == SDLK_ESCAPE:
                 running = False
         elif event.type == SDL_KEYUP:
@@ -48,20 +47,25 @@ def handle_events():
                 dir += 1
                 
 
-
 running = True
 x = 720 // 2
 frame = 0
 dir = 0
 
+
 while running:
     clear_canvas()
     bath.draw(bath_WIDTH // 2, bath_HEIGHT // 2)
-    p.clip_draw(frame * f, h, 90, 160, x, y)
+    p.clip_draw(frame * f, h, 120, 160, x, y)
     update_canvas()
     handle_events()
-    frame = (frame + 1) % 4
+    frame = (frame + 1) % 6
     x += dir * 25
     delay(0.1)
+
+    if x > 720:
+        x -= dir * 25
+    elif x < 0:
+        x = 0
 
 close_canvas()
