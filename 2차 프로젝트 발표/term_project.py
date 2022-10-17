@@ -13,6 +13,7 @@ h = 420
 y = 90
 f = 120
 
+
 def handle_events():
     global running
     global dir
@@ -45,13 +46,13 @@ def handle_events():
                 dir -= 1
             elif event.key == SDLK_LEFT:
                 dir += 1
+
                 
 
 running = True
 x = 720 // 2
 frame = 0
 dir = 0
-
 
 while running:
     clear_canvas()
