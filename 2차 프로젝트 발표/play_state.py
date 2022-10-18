@@ -1,4 +1,5 @@
 from pico2d import*
+import random
 
 class Bath:
     def __init__(self):
@@ -29,6 +30,41 @@ class Boy:
     def draw(self):
         self.character.clip_draw(self.frame*self.f, self.h, 120, 160, self.x, self.y)
         delay(0.1)
+
+class Enemy:
+    def __init__(self):
+        self.y = 540
+        self.x = random.randint(0, 720)
+        self.enemy = load_image('smile_poop.png')
+        self.speed = 20
+
+    def update(self):
+        self.y -= self.speed
+        if self.y < 0:
+            self.y = 540
+            self.x = random.randint(0, 720)
+            self.speed += 10
+
+    def draw(self):
+        self.enemy.draw(self.x, self.y)
+
+class Item:
+    def __init__(self):
+        self.y = 540
+        self.x = random.randint(0, 720)
+        self.coin = load_image('coin.png')
+        self.bomb = load_image('Bomb.png')
+        self.speed = 30
+
+    def update(self):
+        self.y -= self.speed
+        if self.y < 0:
+            self.y = 540
+            self.x = random.randint(0, 720)
+            self.speed += 3
+
+    def draw(self):
+        self.coin.draw(self.x, self.y)
 
 def handle_events():
     global running
@@ -65,30 +101,40 @@ def handle_events():
 
 bath = None
 boy = None
+enemy = None
+item = None
 running = True
 dir = 0
 h = 420
 f = 120
 
 def enter():
-    global bath, boy, running
+    global bath, boy, enemy, item, running
     boy = Boy()
     bath = Bath()
+    enemy = Enemy()
+    item = Item()
 
 
 def exit():
-    global bath, boy
+    global bath, boy, enemy, item
     del bath
     del boy
+    del enemy
+    del item
 
 def update():
     boy.update()
+    enemy.update()
+    item.update()
     pass
 
 def draw():
     clear_canvas()
     bath.draw()
     boy.draw()
+    enemy.draw()
+    item.draw()
     update_canvas()
 
 def pause():
