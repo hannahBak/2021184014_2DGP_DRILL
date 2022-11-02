@@ -1,8 +1,10 @@
 from pico2d import *
+import random
 import game_framework
 import logo_state
 import title_state
 import item_state
+
 
 class Grass:
     def __init__(self):
@@ -13,8 +15,8 @@ class Grass:
 
 class Boy:
     def __init__(self):
-        self.x, self.y = 0, 90
-        self.frame = 0
+        self.x, self.y = random.randint(0, 800), 90
+        self.frame = random.randint(0, 7)
         self.dir = 1
         self.image = load_image('animation_sheet.png')
         self.boy_image = load_image('ball21X21.png')
@@ -57,28 +59,32 @@ def handle_events():
 
 
 # 게임 초기화 : 객체들을 생성
-boy = None # C NULL
+boys = [] # C NULL
 grass = None
 running = None
 def enter():
-    global boy, grass, running
-    boy = Boy()
+    global grass, running
+    boys.append(Boy())
+    boys.append(Boy())
     grass = Grass()
     running = True
 
 # 게임 종료 - 객체를 소멸
 def exit():
-    global boy, grass
-    del boy
+    global grass
+    for boy in boys:
+        del boy
     del grass
 
 # 게임 월드 객체를 업데이트 - 게임 로직
 def update():
-    boy.update()
+    for boy in boys:
+        boy.update()
 
 def draw_world():
     grass.draw()
-    boy.draw()
+    for boy in boys:
+        boy.draw()
 
 
 def draw():
@@ -92,6 +98,9 @@ def pause():
 
 def resume():
     pass
+
+def add_one_boy():
+    boys.append(Boy())
 
 def test_self():
     import sys
